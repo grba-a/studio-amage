@@ -15,9 +15,18 @@ const FADE_DURATION = 1200
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function HeroSlider() {
-  const [current, setCurrent] = useState(0)
-  const [paused,  setPaused]  = useState(false)
-  const touchStartX           = useRef<number>(0)
+  const [current,     setCurrent]     = useState(0)
+  const [paused,      setPaused]      = useState(false)
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set([0]))
+  const touchStartX                   = useRef<number>(0)
+
+  // Preload remaining slides 1s after mount so they don't block initial page load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadedSlides(new Set([0, 1, 2, 3]))
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     if (paused) return
@@ -58,7 +67,7 @@ export default function HeroSlider() {
           style={{
             position:         'absolute',
             inset:             0,
-            backgroundImage:  `url(${slide.src})`,
+            backgroundImage:  loadedSlides.has(i) ? `url(${slide.src})` : '',
             backgroundSize:   'cover',
             backgroundPosition: slide.pos,
             opacity:          i === current ? 1 : 0,

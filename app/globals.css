@@ -2,8 +2,8 @@
 
 /* ── Tailwind v4 theme: fonts + brand colours ── */
 @theme {
-  --font-sans:   'Poppins', sans-serif;
-  --font-serif:  'Playfair Display', serif;
+  --font-sans:   var(--font-poppins), sans-serif;
+  --font-serif:  var(--font-playfair), serif;
 
   --color-brand:        #935638;
   --color-brand-light:  #b06840;
@@ -27,7 +27,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     background-color: var(--bg);
     color: var(--text-primary);
     overflow-x: hidden;

@@ -1,11 +1,27 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import './globals.css'
+import { Playfair_Display, Poppins } from 'next/font/google'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingCTA from '@/components/layout/FloatingCTA'
 import CookieBanner from '@/components/layout/CookieBanner'
+import './globals.css'
+
+const playfair = Playfair_Display({
+  subsets:  ['latin'],
+  display:  'swap',
+  variable: '--font-playfair',
+  weight:   ['400', '700', '900'],
+  style:    ['normal', 'italic'],
+})
+
+const poppins = Poppins({
+  subsets:  ['latin'],
+  display:  'swap',
+  variable: '--font-poppins',
+  weight:   ['300', '400', '500', '600'],
+})
 
 const GA_ID = 'G-PXM6MZFMMJ'
 const BASE_URL = 'https://studioamage.com'
@@ -66,7 +82,7 @@ export default function RootLayout({
   const isProduction = process.env.NODE_ENV === 'production'
 
   return (
-    <html lang="hr">
+    <html lang="hr" className={`${playfair.variable} ${poppins.variable}`}>
       <head>
         {isProduction && (
           <Script id="gtm-script" strategy="afterInteractive">
@@ -77,12 +93,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TWXMZB8L');`}
           </Script>
         )}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="preload" as="image" href="/images/hero/hero-1.webp" fetchPriority="high" />
       </head>
       <body>
         {isProduction && (
